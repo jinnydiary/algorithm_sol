@@ -1,10 +1,9 @@
 package swea.d1;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-//1545. 거꾸로 출력해 보아요(D1)
+//1545. 거꾸로 출력해 보아요(D1) 
 public class Main_1545 {
 
 	public static void main(String[] args) throws IOException {
