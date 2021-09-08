@@ -19,7 +19,6 @@ public class Main_2217 {
 
 		System.out.println((cnt0 < cnt1) ? cnt0 : cnt1);
 
-
 	}
 	
 	//모두 1로 만들 경우
