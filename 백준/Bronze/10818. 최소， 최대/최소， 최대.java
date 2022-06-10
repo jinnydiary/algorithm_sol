@@ -4,17 +4,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner scr = new Scanner(System.in);
-		int n = scr.nextInt();
-		int[] num = new int[n];
-		num[0] = scr.nextInt();
-		int min = num[0], max = num[0];
-        
-		for(int i = 1; i < n; ++i) {
-			num[i] = scr.nextInt();
-			if(min > num[i])
-				min = num[i];
-			else if(max < num[i])
-				max = num[i];
+		int N = scr.nextInt();
+		int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+		for(int n = 0; n < N; ++n) {
+			int num = scr.nextInt();
+			min = Math.min(min, num);
+			max = Math.max(max, num);
 		}
 		System.out.print(min + " " + max);
 		scr.close();
