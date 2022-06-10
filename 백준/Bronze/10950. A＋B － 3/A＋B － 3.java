@@ -4,15 +4,13 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner scr = new Scanner(System.in);
-		int t = scr.nextInt();
-		int a, b;
-		for(int i = 0; i < t; i++) {
-			a = scr.nextInt();
-			b = scr.nextInt();
+		int T = scr.nextInt();
+		for(int t = 0; t < T; ++t) {
+			int a = scr.nextInt();
+			int b = scr.nextInt();
 			System.out.println(a+b);
 		}
 		scr.close();
-
 	}
 
 }
