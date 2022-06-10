@@ -1,28 +1,24 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
 
-	public static void main(String[] args) {
-		Scanner scr = new Scanner(System.in);
-		int a = scr.nextInt();
-		int b = scr.nextInt();
-		int c = scr.nextInt();
-		int abc = a*b*c, temp = abc, cnt;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int[] num = new int[10];
 		
-		for(int i=0; i<=9; i++) {
-			temp = abc;
-			cnt=0;
-			while(temp > 0) {
-				int num = temp % 10;
-				if(num == i) {
-					cnt++;
-				}
-				temp /= 10;
-			}
-			System.out.println(cnt);
+		int res = 1;
+		for(int i = 0; i < 3; ++i)
+			res *= Integer.parseInt(br.readLine());
+		
+		while(res != 0) {
+			++num[res % 10];
+			res /= 10;
 		}
 		
-		scr.close();
+		for(int i = 0; i < 10; ++i)
+			System.out.println(num[i]);
 
 	}
 
