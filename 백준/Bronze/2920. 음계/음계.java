@@ -4,35 +4,32 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner scr = new Scanner(System.in);
-		int[] m = new int[8];
-		for(int i=0; i<m.length; i++)
-			m[i] = scr.nextInt();
+		int[] num = new int[8];
+		for(int i = 0; i < 8; ++i)
+			num[i] = scr.nextInt();
 		
-		boolean check1 = false, check2 = false;
-		for(int i=0; i<m.length; i++) {
-			if(m[i] == i+1)
-				continue;
+		int status = -1; //0 : up, 1 : down, 2 : mix
+		for(int i = 0; i < 7; ++i) {
+			if(i == 0) status = (num[i] < num[i+1]) ? 0 : 1;
 			else {
-				check1 = true;
-				break;
-			}
-		}
-		
-		if(check1) {
-			for(int i=m.length-1; i>=0; i--) {
-				if(m[i] == m.length-i)
-					continue;
+				if(status == 0 && num[i] < num[i+1] || status == 1 && num[i] > num[i+1]) continue;
 				else {
-					check2 = true;
+					status = 2;
 					break;
 				}
 			}
-			if(check2)
-				System.out.print("mixed");
-			else
+		}
+		switch(status) {
+			case 0 :
+				System.out.print("ascending");
+				break;
+			case 1 :
 				System.out.print("descending");
-		}else
-			System.out.print("ascending");
+				break;
+			case 2 :
+				System.out.print("mixed");
+				break;
+		}
 		scr.close();
 	}
 
