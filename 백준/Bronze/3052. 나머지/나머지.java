@@ -1,24 +1,16 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Scanner scr  = new Scanner(System.in);
-		int[] num = new int[10];
-		int[] cnt = new int[42];
-		for(int i = 0; i < num.length; ++i) {
-			num[i] = scr.nextInt();
-			++cnt[num[i] % 42];
+		Scanner scr = new Scanner(System.in);
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		for(int i = 0; i < 10; ++i) {
+			int num = scr.nextInt() % 42;
+			if(!list.contains(num)) list.add(num);
 		}
-		
-		int count = 0;
-		for(int i = 0; i < cnt.length; ++i) {
-			if(cnt[i] == 0)
-				continue;
-			else if(cnt[i] > 0)
-				++count;
-		}
-		System.out.print(count);
+		System.out.print(list.size());
 		scr.close();
 	}
 
