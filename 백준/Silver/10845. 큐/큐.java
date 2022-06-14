@@ -10,42 +10,37 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 		StringTokenizer st = null;
+		int N = Integer.parseInt(br.readLine()); //명령의 수
 		
-		int N = Integer.parseInt(br.readLine());
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		
-		while(N-- != 0) {
-			st = new StringTokenizer(br.readLine());
-			String str = st.nextToken();
+		for(int n = 0; n < N; ++n) {
+			st = new StringTokenizer(br.readLine(), " ");
+			String order = st.nextToken();
 			
-			switch(str) {
-			case "push":
-				queue.add(Integer.parseInt(st.nextToken()));
-				break;
-			case "pop":
-				if(!queue.isEmpty()) sb.append(queue.poll() + "\n");
-				else sb.append(-1 + "\n");
-				break;
-			case "size":
-				sb.append(queue.size() + "\n");
-				break;
-			case "empty":
-				if(!queue.isEmpty()) sb.append(0 + "\n");
-				else sb.append(1 + "\n");
-				break;
-			case "front":
-				if(!queue.isEmpty()) sb.append(queue.peekFirst() + "\n");
-				else sb.append(-1 + "\n");
-				break;
-			case "back":
-				if(!queue.isEmpty()) sb.append(queue.peekLast() + "\n");
-				else sb.append(-1 + "\n");
-				break;
+			switch(order) {
+				case "push": queue.offer(Integer.parseInt(st.nextToken())); break;
+				case "pop": 
+					if(queue.isEmpty()) sb.append(-1 + "\n");
+					else sb.append(queue.poll() + "\n");
+					break;
+				case "size": sb.append(queue.size() + "\n"); break;
+				case "empty":
+					if(queue.isEmpty()) sb.append(1 + "\n");
+					else sb.append(0 + "\n");
+					break;
+				case "front":
+					if(queue.isEmpty()) sb.append(-1 + "\n");
+					else sb.append(queue.getFirst() + "\n");
+					break;
+				case "back":
+					if(queue.isEmpty()) sb.append(-1 + "\n");
+					else sb.append(queue.getLast() + "\n");
+					break;
 			}
 		}
 		
 		System.out.print(sb);
-
 	}
 
 }
