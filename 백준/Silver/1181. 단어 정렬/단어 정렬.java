@@ -21,6 +21,7 @@ class Alpha implements Comparable<Alpha> {
 			for(; i < this.len; ++i)
 				if(this.word.charAt(i) != alpha.word.charAt(i)) break;
 			return this.word.charAt(i) - alpha.word.charAt(i);
+			//return this.word.compareTo(alpha.word); -- string에서도 compareTo() 함수 존재
 		}else return this.len - alpha.len; //길이가 짧은 것부터
 	}
 	
