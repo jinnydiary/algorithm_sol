@@ -4,50 +4,50 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Main {
-	
-	static class Word implements Comparable<Word> {
-		String word;
-		
-		public Word(String word) {
-			this.word = word;
-		}
+class Alpha implements Comparable<Alpha> {
 
-		@Override
-		public int compareTo(Word w) {
-			int len = this.word.length() - w.word.length();
-			if(len != 0) return len;
-			else {
-				return this.word.compareTo(w.word);
-			}
-		}
+	String word;
+	int len;
+	
+	public Alpha(String word) {
+		this.word = word;
+		this.len = word.length();
 	}
 	
-	static ArrayList<Word> words;
+	@Override
+	public int compareTo(Alpha alpha) {
+		if(this.len == alpha.len) { //길이가 같으면 사전 순으로
+			int i = 0;
+			for(; i < this.len; ++i)
+				if(this.word.charAt(i) != alpha.word.charAt(i)) break;
+			return this.word.charAt(i) - alpha.word.charAt(i);
+		}else return this.len - alpha.len; //길이가 짧은 것부터
+	}
+	
+}
+public class Main {
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
+		ArrayList<Alpha> list = new ArrayList<Alpha>();
+		
 		int N = Integer.parseInt(br.readLine());
-
-		words = new ArrayList<>();
 		for(int n = 0; n < N; ++n) {
 			String word = br.readLine();
-			if(checkWord(word)) words.add(new Word(word));
+			if(!contain(list, word)) list.add(new Alpha(word)); //중복단어 X
 		}
-
-		Collections.sort(words);
 		
-		for(int n = 0; n < words.size(); ++n)
-			sb.append(words.get(n).word + "\n");
-		System.out.print(sb.substring(0, sb.length()-1));
+		Collections.sort(list); //정렬
+		for(int i = 0; i < list.size(); ++i)
+			sb.append(list.get(i).word + "\n");
+		System.out.print(sb);
 	}
 
-	private static boolean checkWord(String word) {
-		for(int n = 0; n < words.size(); ++n) {
-			if(words.get(n).word.equals(word))
-				return false;
-		}
-		return true;
+	private static boolean contain(ArrayList<Alpha> list, String word) {
+		for(int i = 0; i < list.size(); ++i)
+			if(list.get(i).word.equals(word)) return true; //이미 있는 단어일 경우
+		return false;
 	}
 
 }
