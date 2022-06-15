@@ -2,36 +2,36 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(br.readLine());
-		Stack<String> stack = new Stack<String>();
 		StringBuilder sb = new StringBuilder();
-		
+
+		Stack<Character> stack = new Stack<Character>();
 		for(int t = 0; t < T; ++t) {
 			stack.clear();
-			String str = br.readLine();
-			
+			char[] ch = br.readLine().toCharArray();
 			boolean check = true;
 			
-			for(int i=0; i<str.length(); ++i) {
-				char temp = str.charAt(i);
-				if('(' == temp) stack.push("(");
-				else if(')' == temp && !stack.isEmpty()) stack.pop();
+			for(int c = 0; c < ch.length; ++c) {
+				if(ch[c] == '(') stack.push('(');
 				else {
-					check = false;
-					break;
+					if(!stack.isEmpty()) stack.pop();
+					else {
+						check = false;
+						break;
+					}
 				}
 			}
-			
-			if(check && stack.isEmpty()) sb.append("YES\n");
-			else sb.append("NO\n");
+			if(!stack.isEmpty() || check == false) sb.append("NO" + "\n");
+			else sb.append("YES" + "\n");
 		}
 		
-		System.out.print(sb.substring(0, sb.length()-1));
+		System.out.print(sb);
 	}
 
 }
