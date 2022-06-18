@@ -5,40 +5,41 @@ import java.util.Stack;
 
 public class Main {
 	
-	private static int push(int pos, int num) {
-		while(stack.isEmpty() || pos > stack.peek()) {
-			stack.push(++num);
-			sb.append("+\n");
-		}
-		return num;
-	}
-
-	private static void pop(int pos) {
-		while(!stack.isEmpty() && pos <= stack.peek()) {
-			stack.pop();
-			sb.append("-\n");				
-		}
-	}
-	
 	static StringBuilder sb = new StringBuilder();
 	static Stack<Integer> stack = new Stack<Integer>();
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
 		
-		int n = Integer.parseInt(br.readLine());
-		int num = 0;
-		
-		for(int i = 0; i < n; ++i) { //n번
-			int pos = Integer.parseInt(br.readLine());
+		int number = 0;
+		for(int n = 0; n < N; ++n) {
+			int num = Integer.parseInt(br.readLine());
 			
-			num = push(pos, num);
-			pop(pos);
+			number = pushNum(num, number); //숫자 push
+			popNum(num); //숫자 pop
 			
-			if(num > n) break;
+			if(number > N) break;
+			
 		}
 		
-		if(num <= n && stack.isEmpty()) System.out.print(sb);
+		if(number <= N && stack.isEmpty()) System.out.print(sb);
 		else System.out.print("NO");
+		
 	}
-
+	
+	private static int pushNum(int num, int n) {
+		while(stack.isEmpty() || stack.peek() < num) {
+			stack.push(++n);
+			sb.append("+" + "\n");			
+		}
+		return n;
+	}
+	
+	private static void popNum(int num) {
+		while(!stack.isEmpty() && num <= stack.peek()) {
+			stack.pop();
+			sb.append("-" + "\n");			
+		}
+	}
+	
 }
