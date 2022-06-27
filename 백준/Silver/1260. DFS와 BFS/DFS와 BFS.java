@@ -7,57 +7,59 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-	static int N, M, V, D[][];
-	static boolean[] visited;
+	static int N, map[][];
 	static StringBuilder sb = new StringBuilder();
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken()); //정점의 개수
-		M = Integer.parseInt(st.nextToken()); //간선의 개수
-		V = Integer.parseInt(st.nextToken()); //탐색 시작 번호
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 		
-		D = new int[N+1][N+1];
+		N = Integer.parseInt(st.nextToken()); //정점의 개수
+		int M = Integer.parseInt(st.nextToken()); //간선의 개수
+		int V = Integer.parseInt(st.nextToken()); //탐색을 시작할 정점의 번호
+		
+		map = new int[N+1][N+1]; //정점 번호는 1번부터 시작
 		
 		for(int m = 0; m < M; ++m) {
-			st = new StringTokenizer(br.readLine());
-			int r = Integer.parseInt(st.nextToken());
-			int c = Integer.parseInt(st.nextToken());
-			D[r][c] = D[c][r] = 1;
+			st = new StringTokenizer(br.readLine(), " ");
+			int start = Integer.parseInt(st.nextToken());
+			int end = Integer.parseInt(st.nextToken());
+			map[start][end] = map[end][start] = 1;
 		}
 		
-		visited = new boolean[N+1];
-		dfs(V);
+		dfs(V, new boolean[N+1]);
 		sb.append("\n");
-		visited = new boolean[N+1];
-		bfs();
+		bfs(V);
+		System.out.print(sb);
 	}
 	
-	private static void dfs(int v) {
-		visited[v] = true;
-		sb.append(v + " ");
-		for(int i = 1; i <= N; ++i)
-			if(D[v][i] == 1 && !visited[i]) dfs(i);
-	}
-
-	private static void bfs() {
+	private static void bfs(int v) {
 		Queue<Integer> queue = new LinkedList<Integer>();
-		visited[V] = true;
-		queue.offer(V);
+		boolean[] visited = new boolean[N+1];
+		queue.offer(v);
+		visited[v] = true; //시작 번호
 		
 		while(!queue.isEmpty()) {
-			int num = queue.poll();
-			sb.append(num + " ");
-			for(int i = 1; i <= N; ++i) {
-				if(D[num][i] == 1 && !visited[i]) {
-					queue.offer(i);
-					visited[i] = true;
+			int now = queue.poll();
+			sb.append(now + " ");
+			
+			for(int n = 1; n <= N; ++n) {
+				if(map[now][n] == 1 && !visited[n]) {
+					visited[n] = true;
+					queue.offer(n);
 				}
 			}
 		}
+	}
+
+	private static void dfs(int now, boolean[] visited) {
+		sb.append(now + " ");
+		visited[now] = true;
 		
-		System.out.print(sb);
-		
+		for(int n = 1; n <= N; ++n) {
+			if(map[now][n] == 1 && !visited[n]) {
+				dfs(n, visited);
+			}
+		}
 	}
 
 }
