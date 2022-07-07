@@ -7,56 +7,52 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-	static int N, M, friends[][];
+	static int N, matrix[][], min = Integer.MAX_VALUE, num;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+		N = Integer.parseInt(st.nextToken()); //유저 수
+		int M = Integer.parseInt(st.nextToken()); //친구관계 수
+		matrix = new int[N+1][N+1];
 		
-		friends = new int[N+1][N+1];
 		for(int m = 0; m < M; ++m) {
 			st = new StringTokenizer(br.readLine(), " ");
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
-			friends[a][b] = friends[b][a] = 1;
+			matrix[a][b] = matrix[b][a] = 1;
 		}
 		
-		int min = Integer.MAX_VALUE;
-		int minPerson = 0;
-		for(int n = 1; n <= N; ++n) {
-			int count = bfs(n);
-			if(min > count) {
-				min = count;
-				minPerson = n;
-			}
-		}
+		for(int n = 1; n <= N; ++n)
+			findRelationShip(n); //친구관계 찾기
 		
-		System.out.print(minPerson);
+		System.out.print(num);
 	}
 	
-	private static int bfs(int n) {
+	private static void findRelationShip(int n) {
 		Queue<int[]> queue = new LinkedList<int[]>();
+		boolean[] visited = new boolean[N+1];
 		queue.offer(new int[] {n, 0});
-		boolean[] meet = new boolean[N+1];
-		meet[n] = true;
+		visited[n] = true;
 		
-		int res = 0;
+		int sum = 0;
 		while(!queue.isEmpty()) {
 			int[] info = queue.poll();
-			int p = info[0], cabin = info[1];
+			int user = info[0], cnt = info[1];
+			sum += cnt;
 			
 			for(int i = 1; i <= N; ++i) {
-				if(friends[p][i] == 1 && !meet[i]) {
-					queue.offer(new int[] {i, cabin+1});
-					res += (cabin+1);
-					meet[i] = true;
+				if(user != i && matrix[user][i] == 1 && !visited[i]) {
+					visited[i] = true;
+					queue.offer(new int[] {i, cnt+1});
 				}
 			}
 		}
 		
-		return res;
-		
+		if(min > sum) {
+			min = sum;
+			num = n;
+		}else if(min == sum)
+			num = (num > n) ? n : num;
 	}
-
+	
 }
