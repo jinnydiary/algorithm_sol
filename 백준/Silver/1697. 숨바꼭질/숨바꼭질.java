@@ -5,52 +5,43 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-//백준 1697번 숨바꼭질(1101)
 public class Main {
 
-	static final int num = 100001;
-	static int N, K; //수빈이의 현재 위치, 동생의 위치
-	static boolean[] visited;
-	static Queue<int[]> queue;
+	static int N, K, time = Integer.MAX_VALUE;
+	static int[] check = new int[100001];
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		K = Integer.parseInt(st.nextToken());
-		System.out.println(bfs());
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+		N = Integer.parseInt(st.nextToken()); //수빈이의 위치
+		K = Integer.parseInt(st.nextToken()); //동생의 위치
+		
+		findMinTime(); //가장 빠른 시간 찾기
+		System.out.print(time);
 	}
 	
-	//수빈이 이동 - bfs
-	private static int bfs() {
-		queue = new LinkedList<>();
+	private static void findMinTime() {
+		Queue<int[]> queue = new LinkedList<int[]>();
+		int[] num = new int[100001];
 		queue.offer(new int[] {N, 0});
-		visited = new boolean[num];
-		visited[N] = true;
-		int time = 0;
 		
 		while(!queue.isEmpty()) {
-			int[] p = queue.poll();
-			int pos = p[0];
-			time = p[1];
-			if(pos == K) break; //동생을 찾았다면 break
+			int[] info = queue.poll();
+			int now = info[0], t = info[1];
 			
-			//걸을 경우 1초 후에 있을 수 있는 위치: +1, -1
-			checkVisit(pos-1, time);
-			checkVisit(pos+1, time);
-			//순간이동을 하는 경우 1초 후 있을 수 있는 위치: *2
-			checkVisit(pos*2, time);
-
-		}
-		return time;
-	}
-
-	//이동할 수 있는 위치인지 체크
-	private static void checkVisit(int next, int time) {
-		if(0 <= next && next < num && !visited[next]) {
-			visited[next] = true;
-			queue.offer(new int[] {next, time+1});				
+			if(now == K) {
+				time = Math.min(time, t);
+				break;
+			}
+			
+			for(int i = 0; i < 3; ++i) {
+				int move = (i == 0) ? now + 1 : (i == 1) ? now - 1 : now * 2;
+				if( move >= 0 && move <= 100000 && (num[move] == 0 || (num[move] != 0 && t+1 < num[move]))) {
+					num[move] = t+1;
+					queue.offer(new int[] {move, t+1});
+				}
+			}
 		}
 		
 	}
-
+	
 }
