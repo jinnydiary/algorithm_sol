@@ -19,7 +19,7 @@ public class Main {
 			for(int i = 0; i < n; ++i) lang[i] = Integer.parseInt(str[i]);
 
 	        //인덱스를 활용해서 새로운 언어 만들기
-			int countD = 0, start = 0, last = n-1, num = n;
+			int countD = 0, start = 0, last = n-1, num = n; //num : 현재 들어있는 숫자 갯수
 			for(int i = 0; i < p.length; ++i) {
 				if(p[i] == 'D') { // D : 버리기
 					++countD;
@@ -36,7 +36,7 @@ public class Main {
 				if(countD > n) sb.append("error\n");
 				else {
 					sb.append("[");
-					if(num > 0) {
+					if(num > 0) { //들어있는 숫자가 있는 경우
 						if(start <= last) {
 							for(int i = start; i <= last; ++i)
 								sb.append(lang[i] + ",");
