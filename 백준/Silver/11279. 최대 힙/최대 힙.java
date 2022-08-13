@@ -4,32 +4,23 @@ import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.PriorityQueue;
 
-//백준 11279번 최대 힙(1004)
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 		int N = Integer.parseInt(br.readLine()); //연산의 개수
+		PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder()); // 내림차순 : Collections.reverseOrder()
 		
-		//Collections.reverseOrder() : 내림차순 정렬
-		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder());
-		
-		for(int i = 0; i < N ; i++) {
-			int x = Integer.parseInt(br.readLine());
-			if(x == 0) { //0일 경우
+		for(int n = 0; n < N; ++n) {
+			int x = Integer.parseInt(br.readLine()); //정수
+			if(x == 0) {
 				if(pq.isEmpty()) sb.append(0 + "\n");
-				else {
-					int num = pq.poll();
-					sb.append(num + "\n");
-				}
-			}else { //자연수일 경우
-				pq.offer(x);
-			}
+				else sb.append(pq.poll() + "\n");
+			}else pq.offer(x);
 		}
 		
 		System.out.print(sb);
-		
 	}
-
+	
 }
