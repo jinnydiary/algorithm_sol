@@ -29,7 +29,7 @@ public class Main {
 	
 	private static long findP(int n) { // P(N) 찾기
 		if(P[n] != 0) return P[n];
-		return P[n] = findP(n-1) + findP(n-5);
+		return P[n] = findP(n-1) + findP(n-5); //동적계획법
 	}
 	
 }
