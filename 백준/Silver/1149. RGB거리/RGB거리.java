@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+//DP 사용
 public class Main {
 	
 	static int N, colorCost[][], costSum[][], rgb = Integer.MAX_VALUE;
